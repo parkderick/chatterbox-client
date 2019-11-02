@@ -10,25 +10,28 @@ var App = {
     FormView.initialize();
     RoomsView.initialize();
     MessagesView.initialize();
-
     // Fetch initial batch of messages
     App.startSpinner();
-    App.fetch(App.stopSpinner);
+    App.fetch(App.initialRender);
 
   },
 
-  fetch: function(callback = ()=>{}) {
-    Parse.readAll((data) => {
-      // examine the response from the server request:
-      console.log(data);
+  initialRender: function(data) {
+    App.stopSpinner();
+    for (var i = 0; i < 20; i++) {
+      MessagesView.renderMessage(data[i]);
+    }
+  },
 
-      callback();
+  fetch: function(callback) {
+    Parse.readAll(data => {
+      callback(data.results);
     });
   },
 
   startSpinner: function() {
-    App.$spinner.show();
     FormView.setStatus(true);
+    App.$spinner.show();
   },
 
   stopSpinner: function() {
