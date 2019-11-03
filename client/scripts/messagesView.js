@@ -3,17 +3,21 @@ var MessagesView = {
   $chats: $('#chats'),
 
   initialize: function() {
-    // console.log(data);
-    // for (var i = 0; i < data.results.length; i++) {
-    //   $('#chats').append(MessageView.render(data.results[i]));
-    // }
   },
-
-  render: function() {
+  // Gather data and load the associated templates -> apply gathered data to associated templates.
+  renderMessage: function (message) {
+    var $renderMsg = MessageView.render(message);
+    $('#chats').append($renderMsg);
   },
-
-  renderMessage: function(data) {
-    $('#chats').append(MessageView.render(data));
-  }
-
-};
+  renderMessages: function () {
+    _.each(Messages.storage, (message) => {
+      var $renderMsg = MessageView.render(message)
+      console.log($renderMsg);
+      $('#chats').append($renderMsg);
+    })
+  },
+  // items: function (data) {
+  //   data.filter(message => {
+  //     Room.isSelected(message))
+  // }
+}

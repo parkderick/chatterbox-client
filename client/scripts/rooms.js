@@ -1,15 +1,18 @@
 var Rooms = {
-
-  add: function() {
-    console.log('hello!')
+  storage: {},
+  selected: 'lobby',
+  isSelected: roomname => {
+    return roomname === Rooms.selected || !roomname && Rooms.selected === 'lobby'
   },
-
-  addRoomsClickEvent: function() {
-    $('#rooms button').click(function() {
-      Rooms.add()
+  update: (messages, cb) => {
+    var rooms = _.pluck(messages, 'roomname');
+    rooms = rooms.uniq();
+    _.each(rooms, room => {
+      Rooms.storage.add(room);
     })
+    cb(rooms);
+  },
+  add: (room) => {
+    storage.roomname = room;
   }
-
-
 };
-Rooms.addRoomsClickEvent();
